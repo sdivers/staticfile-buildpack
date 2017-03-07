@@ -66,13 +66,14 @@ if [ ${build_dir}/public != ${root_dir_absolute} ]; then
 
   rm -rf $build_dir/public
   mv $tmp_dir  $build_dir/public
-  status "Updating permissions on public directory to rx for vcap user"
-  chmod -R a+rx $build_dir/public
 fi
 shopt -u extglob
 shopt -u dotglob
 
-
+status "Copying micro service nginx fragments to nginx/services"
+mkdir nginx/services
+mv $build_dir/public/conf nginx/services/
+chmod -R a+rx nginx/services
 
 status "Setting up nginx"
 tar xzf $compile_nginx_tgz
