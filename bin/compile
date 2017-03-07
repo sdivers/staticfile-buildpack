@@ -66,7 +66,8 @@ if [ ${build_dir}/public != ${root_dir_absolute} ]; then
 
   rm -rf $build_dir/public
   mv $tmp_dir  $build_dir/public
-  chmod -R u+rx $build_dir/public
+  status "Updating permissions on public directory to rx for vcap user"
+  chmod -R a+rx $build_dir/public
 fi
 shopt -u extglob
 shopt -u dotglob
