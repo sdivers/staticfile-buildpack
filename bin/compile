@@ -70,11 +70,6 @@ fi
 shopt -u extglob
 shopt -u dotglob
 
-status "Copying micro service nginx fragments to nginx/services"
-mkdir nginx/services
-mv $build_dir/public/conf nginx/services/
-chmod -R a+rx nginx/services
-
 status "Setting up nginx"
 tar xzf $compile_nginx_tgz
 cp -f $compile_buildpack_dir/conf/nginx.conf nginx/conf/nginx.conf
@@ -82,6 +77,11 @@ cp -f $compile_buildpack_dir/conf/mime.types nginx/conf/mime.types
 
 [[ -f $build_dir/public/nginx.conf ]] && mv $build_dir/public/nginx.conf nginx/conf/nginx.conf
 [[ -f $build_dir/public/mime.types ]] && mv $build_dir/public/mime.types nginx/conf/mime.types
+
+status "Copying micro service nginx fragments to nginx/services"
+mkdir nginx/services
+mv $build_dir/public/conf nginx/services/
+chmod -R a+rx nginx/services
 
 if [[ -f Staticfile.auth ]]; then
   status "Enabling basic authentication using Staticfile.auth"
