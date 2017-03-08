@@ -24,6 +24,18 @@ fi
 mv $conf_file $APP_ROOT/nginx/conf/orig.conf
 erb $APP_ROOT/nginx/conf/orig.conf > $APP_ROOT/nginx/conf/nginx.conf
 
+# Do the variable replacement for any nginx config file
+services_folder=$APP_ROOT/nginx/services/conf
+if [ -d "$services_folder" ]; then
+  shopt -s nullglob
+  for file in $services_folder/*.conf
+    if [ -f $file ]; then
+      mv $file $services_folder/temp.conf
+      erb $services_folder/temp.conf $file
+    fi
+  done
+fi
+
 # ------------------------------------------------------------------------------------------------
 
 mkfifo $APP_ROOT/nginx/logs/access.log
