@@ -26,11 +26,11 @@ erb $APP_ROOT/nginx/conf/orig.conf > $APP_ROOT/nginx/conf/nginx.conf
 
 # Do the variable replacement for any nginx config file
 services_folder=$APP_ROOT/nginx/services/conf
-echo "List of files in conf: `ls -l $services_folder`"
 if [ -d "$services_folder" ]; then
   #shopt -s nullglob
   for file in $services_folder/*.conf; do
     if [ -f $file ]; then
+      echo "File: $file"
       mv $file $services_folder/temp.conf
       erb $services_folder/temp.conf $file
     fi
