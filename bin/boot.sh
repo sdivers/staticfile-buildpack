@@ -32,7 +32,7 @@ if [ -d "$services_folder" ]; then
     if [ -f $file ]; then
       echo "File: $file"
       mv $file $services_folder/temp.conf
-      erb $services_folder/temp.conf $file
+      erb $services_folder/temp.conf > $file
     fi
   done
 fi
