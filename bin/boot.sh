@@ -24,30 +24,16 @@ fi
 mv $conf_file $APP_ROOT/nginx/conf/orig.conf
 erb $APP_ROOT/nginx/conf/orig.conf > $APP_ROOT/nginx/conf/nginx.conf
 
-# Do the variable replacement for any nginx config file in conf folder.
-conf_folder=$APP_ROOT/nginx/conf
-if [ -d "$conf_folder" ]; then
-  for file in $conf_folder/*.conf; do
-    if [ -f $file ]; then
-      if [ "$file" != "$conf_folder/nginx.conf" ]; then # Don't do the nginx.conf, it's already handled above
-        mv $file $conf_folder/temp.conf
-        erb $conf_folder/temp.conf > $file
-      fi
-    fi
-  done
-fi
-
 # Do the variable replacement for any nginx config file in services folder.
 services_folder=$APP_ROOT/nginx/services/
 if [ -d "$services_folder" ]; then
   for file in $services_folder/*.conf; do
     if [ -f $file ]; then
-      if [ "$file" != "$services_folder/nginx.conf" ]; then # Don't do the nginx.conf, it's already handled above
-        mv $file $services_folder/temp.conf
-        erb $services_folder/temp.conf > $file
-      fi
+      mv $file $services_folder/temp.conf
+      erb $services_folder/temp.conf > $file
     fi
   done
+  rm $services_folder/temp.conf
 fi
 
 # ------------------------------------------------------------------------------------------------
