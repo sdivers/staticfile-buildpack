@@ -80,7 +80,7 @@ mv $build_dir/public/*.conf nginx/conf/
 
 status "Copying micro service nginx fragments to nginx/services"
 mkdir nginx/services
-mv $build_dir/public/services nginx/services/
+mv $build_dir/public/services/*.conf nginx/services/
 chmod -R a+rx nginx/services
 
 if [[ -f Staticfile.auth ]]; then
